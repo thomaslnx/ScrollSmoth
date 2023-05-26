@@ -1,5 +1,5 @@
 {
-  "name": "moveto",
+  "name": "@thomaslnx/ScrollSmoth",
   "version": "1.8.3",
   "description": "A lightweight scroll animation javascript library without any dependency.",
   "main": "dist/moveTo.js",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hsnaydd/moveTo.git"
+    "url": "git+https://github.com/thomaslnx/ScrollSmoth.git"
   },
   "keywords": [
     "simple",
@@ -24,14 +24,14 @@
     "smooth",
     "smoothscroll"
   ],
-  "author": "Hasan Aydoğdu <hsnaydd@gmail.com>",
+  "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hsnaydd/moveTo/issues"
+    "url": "https:github.com/thomaslnx/ScrollSmoth.git"
   },
-  "homepage": "https://github.com/hsnaydd/moveTo#readme",
+  "homepage": "",
   "engines": {
-    "node": ">=8.9.4"
+    "node": ">=16.13.2"
   },
   "devDependencies": {
     "@ava/babel": "^1.0.1",

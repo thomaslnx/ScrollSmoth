@@ -2,7 +2,7 @@
 
 import test from 'ava';
 import 'jsdom-global/register';
-import MoveTo from '../src/moveTo.js';
+import ScrollSmoth from '../src/ScrollSmoth.js';
 
 function createMockDomElement(options) {
   options.attributes = options.attributes || {};
@@ -36,12 +36,12 @@ window.requestAnimationFrame = (function() {
 
 test('It should create instance successfully', (t) =>{
   t.notThrows(() => {
-    new MoveTo();
+    new ScrollSmoth();
   });
 });
 
 test('It should set defaults', (t) => {
-  const inst = new MoveTo();
+  const inst = new ScrollSmoth();
   t.not(inst.options.tolerance, undefined);
   t.not(inst.options.duration, undefined);
   t.not(inst.options.easing, undefined);
@@ -60,18 +60,18 @@ test('It should pass ease function(s) when creating instance', (t) => {
       return -c * t* (t - 2) + b;
     }
   };
-  const inst = new MoveTo({}, easeFunctions);
+  const inst = new ScrollSmoth({}, easeFunctions);
 
   t.not(inst.easeFunctions['easeInQuad'], undefined);
   t.not(inst.easeFunctions['easeOutQuad'], undefined);
 });
 
 test('It should change options', (t) => {
-  t.is(new MoveTo({tolerance: -10}).options.tolerance, -10);
+  t.is(new ScrollSmoth({tolerance: -10}).options.tolerance, -10);
 });
 
 test('It should register trigger', (t) => {
-  const instance = new MoveTo();
+  const instance = new ScrollSmoth();
   const elem = createMockDomElement({});
 
   instance.registerTrigger(elem);
@@ -80,7 +80,7 @@ test('It should register trigger', (t) => {
 });
 
 test('It should unregister trigger', (t) => {
-  const instance = new MoveTo();
+  const instance = new ScrollSmoth();
   const elem = createMockDomElement({});
   const unregister = instance.registerTrigger(elem);
 
@@ -90,7 +90,7 @@ test('It should unregister trigger', (t) => {
 });
 
 test('It should add custom ease function', (t) => {
-  const inst = new MoveTo();
+  const inst = new ScrollSmoth();
   const elem = createMockDomElement({});
 
   inst.addEaseFunction('test', function() {});
@@ -103,13 +103,13 @@ test('It should add custom ease function', (t) => {
 });
 
 test.serial.cb('It should scroll to target position', (t) => {
-  const inst = new MoveTo();
+  const inst = new ScrollSmoth();
 
   const calls = [];
 
   // mock scroll.
-  const originalScroll = window.scroll;
-  window.scroll = function(_, y) {
+  const originalScroll = globalThis.scroll;
+  globalThis.scroll = function(_, y) {
     calls.push(y);
   };
 
@@ -117,7 +117,7 @@ test.serial.cb('It should scroll to target position', (t) => {
 
   setTimeout(() => {
     // revert scroll.
-    window.scroll = originalScroll;
+    globalThis.scroll = originalScroll;
 
     t.is(calls[calls.length - 1], 1500);
 
@@ -126,14 +126,14 @@ test.serial.cb('It should scroll to target position', (t) => {
 });
 
 test.serial.cb('It should scroll to target element', (t) => {
-  const inst = new MoveTo();
+  const inst = new ScrollSmoth();
   const elem = createMockDomElement({offsetTop: 1500});
 
   const calls = [];
 
   // mock scroll.
-  const originalScroll = window.scroll;
-  window.scroll = function(_, y) {
+  const originalScroll = globalThis.scroll;
+  globalThis.scroll = function(_, y) {
     calls.push(y);
   };
 
@@ -141,7 +141,7 @@ test.serial.cb('It should scroll to target element', (t) => {
 
   setTimeout(() => {
     // revert scroll.
-    window.scroll = originalScroll;
+    globalThis.scroll = originalScroll;
 
     t.is(calls[calls.length - 1], 1500);
 
@@ -154,7 +154,7 @@ test.serial.cb('It should scroll to target position inside an element', (t) => {
 
   document.body.appendChild(container);
 
-  const inst = new MoveTo({
+  const inst = new ScrollSmoth({
     container: container
   });
 
